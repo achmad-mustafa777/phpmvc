@@ -5,55 +5,58 @@ require_once '../app/init.php';
 $app = new App();
 
 /*
-! MVC Controller
+! MVC Views
 
-todo: Tujuan pembelajaran 
-* -> menghubungkan url ke bagian controller dan parameternya ke tiap-tiap halaman
-* -> memanggil controller dan method secara default jika tidak menuliskan url
+todo: Tujuan pembelajaran
 
+-> mengganti isi dari tiap-tiap controller dengan memanggil view / interface yang-
+	 terdapat didalam folder views
+	 
 todo: Yang akan dilakukan
 
-!1. Mengubah method constructnya di folder core class App
-
-	? buat properti yang menentukan controller,method, dan parameter defaultnya
-	
-	? buat file baru di folder controller dengan nama Home.php, berupa class Home yang nantinya akan menjadi extend ke class Controller yang ada di folder core
-		 
-		 -> didalam class Home akan dibuat method index yang kedepannya akan menjadi -
-		 		method defaultnya, ketika url tidak ditulis methodnya, maka method ini -
-		 		yang akan muncul secara defaultnya
-		 		
-	? lakukan perbaikan construcnya di class App dengan menambahkan pengecekan:
-		
-			1. menggunakan fungsi 'file_exists()' yang berfungsi mengecek apakah ada-
-				 sebuah file didalam folder controller yang namanya sesuai dengan nama -
-				 url yang diketikan
-				 -> jika ada maka value properti controller akan di timpa dengan file -
-				 		yang diketikan di dalam url
-				 -> lalu gunakan fungsi 'unset()' untuk menghilangkan controllernya dari -
-				 		element array, tujuan penggunaannya adalah untuk mengambil parameter-
-				 		kedepannya.
-				 		
-	? gunakan fungsi 'require_once' untuk memanggil folder controller tujuan untuk mengambil controllernya file classnya
-		 
-	? lakukan instaniasi pemanggilan objek agar bisa dipanggil methodnya.
-	
-	? sekarang lakukan pengecekan untuk methodnya
-	
-		-> gunakan fungsi 'isset()' untuk pengecekan jika method telah ditulis di url
-		-> gunakan fungsi 'method_exists()'
-		-> jika ditemukan maka timpa value dari properti method dengan url yang ditangkap
-		-> lalu lakukan unset()
-		
-	? sekarang kelola properti parameternya yang berupa array
-	
-		-> lakukan pengecekan apakah ditemukan parameter di url
-		-> lalu gunakan fungsi 'array_values()' untuk mengambil datanya
-		-> kemudian masukan ke dalam properti parameternya
-		
-	? terakhir jalankan controller, method dan parameternya jika ada, menggunakan fungsi 'call_user_func_array()'
-		 
-	!note: setiap pembuatan class di folder controller, jangan lupa untuk membuat method defaultnya.
+-> Memanggil method view di folder controller class Home dan About, dimana method view ter-
+	 dapat di folder core di class Controller
+	 
+	 -> isi methodnya berupa alamat/link yang menghubungkan ke folder views yang-
+	 		akan kita coba akses
+	 -> buat dulu file di folder views/home dengan nama file index.php yang isinya-
+	 		berupa html yang nantinya akan menjadi viewnya yang akan di access lewat-
+	 		controller
+	 		
+-> Buat method yang akan mengarahkan ke folder views di folder core di dalam-
+	 class Controller dengna 2 parameter. Paremeter pertama adalah link ke views,
+	 parameter kedua adalah berupa data yang akan dikirimkan ke view berupa array.
+	 Sementara dibuat data defaultnya berupa array kosong.
+	 
+	 -> isi methodnya berupa memanggil viewnya dengan menggunakan fungsi 'require_once'
+	 -> jadikan class Home yang ada di folder controller sebagai child class dari-
+	 		class Controller dengan menambahkan 'extends' 
+	 		
+-> Beralih ke controller About yang memiliki 2 method, yang nantinya akan mem-
+	 buat 2 buah view, yaitu method index dan method page
+	 
+	 -> method pertama akan memanggil method view yang akan diarahkan ke folder-
+	 		about/index
+	 -> method kedua akan memanggil method view yang diarahkan ke folder about/pages
+	 -> buat folder about di folder views dan file index dan page
+	 -> jadikan class About yang di folder controller menjadi class child dari-
+	 		class Controller
+	 -> Sekarang mengirimkan data dari class About ke folder views menggunakan method-
+	 		view
+	 -> buat variabel array di method index yang isinya adalah parameter dari method-
+	 		index itu sendiri yang akan menjadi parameter ke dua dari method view
+	 		
+-> Buat template html dengan tujuan tidak melakukan pekerjaan yang berulang-ulang-
+	 / menerapkan DRY agar lebih efidien dan code menjadi lebih elegant
+	 
+	 -> buat folder dengan nama templates di dalam folder views
+	 -> buat 2 file di dalam folder template yaitu file header.php & file footer.php-
+	 		yang isinya adalah header html untuk file header.php & footer html untuk-
+	 		file footer.php
+	 -> lalu kita rangkai link menuju templates di folder controller , dan terapkan-
+	 		ke seluruh class di dalam folder controller 
+	 
+	 
 		 	
 		
  */

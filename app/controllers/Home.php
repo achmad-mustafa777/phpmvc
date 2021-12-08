@@ -1,9 +1,12 @@
 <?php
 
-class Home
+class Home extends Controller
 {
   public function index()
   {
-    echo 'ini halaman default Home boy';
+    $data['judul'] = 'Home';
+    $this->view('templates/header', $data);
+    $this->view('home/index');
+    $this->view('templates/footer');
   }
 }
