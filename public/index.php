@@ -5,72 +5,55 @@ require_once '../app/init.php';
 $app = new App();
 
 /*
-! Routing
+! MVC Controller
 
 todo: Tujuan pembelajaran 
--> Mengelola Url yang dikirimkan akan menjadi rapi (prety url) dengan harapan nanti 
-ketika tidak menuliskan apapun di url akan beralih ke default kontroler
+* -> menghubungkan url ke bagian controller dan parameternya ke tiap-tiap halaman
+* -> memanggil controller dan method secara default jika tidak menuliskan url
 
-todo: Tahapan yang dilakukan
+todo: Yang akan dilakukan
 
-1.Buat method di class App yang berfungsi sebagai mengambil url dan memecahnya -
-	(parsing url)
-	
-2.Melakukan Rewrite / menulis ulang yang bertujuan agar rapi urlnya dengan method -
-	/ tehnik melakukan konfigurasi pada direktori kita menggunakan file .htaccess.
-	
-	-> file .htaccess adalah file yang bisa digunakan untuk memodifikasi konfigurasi -
-		 dari server apache kita dan itu bisa dilakukan per folder dengan tujuan user -
-		 lain tidak bisa mengaksess sembarangan.
-		 
-3. Membuat file .htaccess di folder app biar tidak bisa diakses oleh user lainnya
-	
-	-> buat file .htaccess di folder app
-	-> tuliskan keyword "Options -Indexes" di file .htaccess yang artinya "selama -
-		 didalam folder app tidak ditemukan file index.php, maka jangan tampilkan isi -
-		 foldernya / blok aksessnya".
-		 
-4. Buat lagi file .htaccess nya di folder public
+!1. Mengubah method constructnya di folder core class App
 
-	-> buat file .htaccess di folder public
-	-> isi / tuliskan keyword di file .htaccess
+	? buat properti yang menentukan controller,method, dan parameter defaultnya
 	
-		~ 'Options -Multiviews' yang bertujuan untuk menghindari kesalahan / ambigu -
-			 ketika memanggil folder / file public ini
-			 
-		~  melakukan tulis ulang url / rewrite yang ada di browser kita dengan key-
-			 word 'RewriteEngine On'
-			 
-		~  tulis beberapa konfigurasi lagi dengan menulis keyword
-			 1. RewriteCond %{REQUEST_FILENAME} !-d
-			 2. RewriteCond %{REQUEST_FILENAME} !-f
-			 yang artinya "jika url yang ditulis merupakan folder (d) / file (f) maka-
-			 abaikan saja" bertujuan untuk menghindari jika ada nama folder/file yang-
-			 sama dengan controller dan method kita nantinya
-			 
-		~  terakhir tulis ulang / rewrite aturan url
-			 RewriteRule ^(.*)$ index.php?url=$1 [L] artinya " tulis ulang url dengan -
-			 mengambil string diawal secara satu-persatu sampai akhir, lalu arahkan ke-
-			 index.php kemudain ambil hasil dari tulis ulang url sebagai value dari url -
-			 jika semua sudah terpenuhi maka jangan jalankan rule lainnya"
-			 
-			 ^ -> diambil string dari awal
-			 (.) -> ambil apapun
-			 * -> satu persatu
-			 $ -> sampai akhir
-			 $1 -> placeholder
-			 [L] -> jika semua rule/aturan sudah dipenuhi jangan jalankan aturan lainnya.
-			 
-5. Kemudian kita pecah string yang diambil dari url menjadi array yaitu dengan cara:
-
-	1. lakukan perbaikan di file App.php / class App di bagian method parseURL() -
-		 untuk menghilangkan tanda '/' diakhir url dengan menambahkan keyword 'rtrim()'
+	? buat file baru di folder controller dengan nama Home.php, berupa class Home yang nantinya akan menjadi extend ke class Controller yang ada di folder core
 		 
-	2. bersihkan url dari karakter2 hack yang akan merusak web kita (security) dengan
-		 fungsi 'filter_var();'
+		 -> didalam class Home akan dibuat method index yang kedepannya akan menjadi -
+		 		method defaultnya, ketika url tidak ditulis methodnya, maka method ini -
+		 		yang akan muncul secara defaultnya
+		 		
+	? lakukan perbaikan construcnya di class App dengan menambahkan pengecekan:
+		
+			1. menggunakan fungsi 'file_exists()' yang berfungsi mengecek apakah ada-
+				 sebuah file didalam folder controller yang namanya sesuai dengan nama -
+				 url yang diketikan
+				 -> jika ada maka value properti controller akan di timpa dengan file -
+				 		yang diketikan di dalam url
+				 -> lalu gunakan fungsi 'unset()' untuk menghilangkan controllernya dari -
+				 		element array, tujuan penggunaannya adalah untuk mengambil parameter-
+				 		kedepannya.
+				 		
+	? gunakan fungsi 'require_once' untuk memanggil folder controller tujuan untuk mengambil controllernya file classnya
 		 
-	3. terakhi kita pecah urlnya dengan fungsi 'explode()'
+	? lakukan instaniasi pemanggilan objek agar bisa dipanggil methodnya.
+	
+	? sekarang lakukan pengecekan untuk methodnya
+	
+		-> gunakan fungsi 'isset()' untuk pengecekan jika method telah ditulis di url
+		-> gunakan fungsi 'method_exists()'
+		-> jika ditemukan maka timpa value dari properti method dengan url yang ditangkap
+		-> lalu lakukan unset()
+		
+	? sekarang kelola properti parameternya yang berupa array
+	
+		-> lakukan pengecekan apakah ditemukan parameter di url
+		-> lalu gunakan fungsi 'array_values()' untuk mengambil datanya
+		-> kemudian masukan ke dalam properti parameternya
+		
+	? terakhir jalankan controller, method dan parameternya jika ada, menggunakan fungsi 'call_user_func_array()'
 		 
+	!note: setiap pembuatan class di folder controller, jangan lupa untuk membuat method defaultnya.
 		 	
 		
  */
