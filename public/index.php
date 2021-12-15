@@ -5,45 +5,73 @@ require_once '../app/init.php';
 $app = new App();
 
 /*
-! MVC Assets
+! MVC Model
 
-todo: Tujuan pembelajaran
 
--> mengelola assets yang dimiliki yang ada di dalam folder Public
--> menerapkan framework boostrep css dan menampilkan gambar
+!-> isi dari model berupa
+	 -> data
+	 -> servis
+	 -> logic dan aplikasi yang dibuat
+	 
+! Tujuan pembelajaran
+1. mendapatkan data dari tempat lain yang disebut model tanpa dari url 
+2. menampilkan data dari model ke view
+3. mengambil data di databases dan menampilkannya di view
+
 
 todo: Yang akan dilakukan
 
--> Download bootsrepnya yang sudah dicompile di websitenya
--> pindahkan filenya ke public
--> menginclude / memanggil file bootsrtap di folder views
+1. Mendapatkan data di model berupa nama
 
-	-> menambahkan link yang diarahkan ke boostrap css di folder templates/header.php
-	-> menambahkan link js di folder templates/footer.php
-		 -> menambahkan link jQuery, poopernya dan link localnya (absolut url)
+	-> buat file dengan nama User_model.php di folder /app/models
+	-> buat class dengan nama User_model 
+	-> buat method baru lagi dengan nama model di class controller.php di bagian-
+		 folder /app/core untuk menangani model mvc yang akan diarahkan ke folder-
+		 models
+	-> buat variabel baru di "Class Home extends Controller" untuk menampung-
+		 method model yang berfungsi memanggil "Class User_model" beserta menggu-
+		 nakan fungsi methodnya yang akan menjadi sebuah data
 		 
--> buat file baru di folder core dengan nama file Constants.php yang bertujuan-
-	 untuk menyimpan constanta-constanta yang kita butuhkan misalnya url absolut
-	 
-	 -> buat constantanya dengan nama BASEURL
-	 -> lakukan require di file init.php
-	 -> ubah link url absolutnya yang ada di file header.php dan footer.php dengan-
-	 		constanta yang baru saja kita buat
-	 		
--> kita modif tampilan sesuai dengan keinginan kita menggunakan boostrap, misal-
-	 nya kita ingin menambahkan navbarnya
-	 
-	 -> ke situs bootsrap cari bagian navbarnya
-	 -> copy code cssnya
-	 -> paste codenya di bagaian file header.php
-	 -> jalankan linknya di navbar
-	 
--> beralih ke folder views/home/index.php untuk menambahkan tampilannya dengan -
-	 jumbotrons
-	 
-	 -> ke situs bootsrap cari bagian jumbotrons
-	 -> copy code htmlnya
-	 -> paste codenya di file index.php dengan tujuan sebagai mempercantik tampilan-
-	 		mengguankan bootsrap framework
+		 $data['nama'] = $this->model('User_model')->getUser();
+		 
+	-> kemudian jadikan variabel tersebut sebagai parameter data yang akan dikirim-
+		 kan ke folder /views/home/index
+		 
+		  $this->view('home/index', $data);
+		  
+	-> kemudian kita beralih ke bagian view yang akan menampilkan datanya di folder-
+		 /views/home/index.php kita tambahkan data yang baru dikirimkan melalui -
+		 "Class User_model".
+		 
+		 <p class="lead">Hallo my name is <?= $data['nama']; ?></p>
+		 
+		 
+2. Mengambil data di databases dan menampilkan di view 
+
+	-> tambahkan navbar baru dengan nama Mahasiswa lagi di folder /views/templates/header.php untuk-
+		 menampilkan data mahasiswa 
+	-> buat file baru di folder controllers dengan nama file Mahasiswa.php yang isinya
+		 berupa "class Mahasiswa sebagai child dari Class Controller dan method yang-
+		 akan berfungsi untuk mengarahkan ke view"
+	-> buat file baru di folder /views/mahasiswa dengan nama index.php yang nantinya-
+		 berfungsi menampilkan data dari databases di web browser
+	-> buat file baru di folder /models dengan nama Mahasiswa_model.php yang ber-
+		 fungsi sebagai data , penghubung dan mengambil data ke databases phpmyadmin
+	-> buat databases di phpmyadmin
+		 
+	2.1. Yang akan dilakukan di /models/Mahasiswa_model.php adalah
+		
+		-> buat class dengan nama "Mahasiswa_model" yang akan conect ke databases dan mengambil datanya
+		-> buat beberapa variabel untuk mengelola databases dan untuk cara koneksinya ke-
+			 databases menggunakan driver PDO dengan tujuan jika kedepannya akan lebih flexi-
+			 bel jika mengganti databasesnya
+			 
+			 -> variabel pertama untuk menampung koneksi PDOnya
+			 -> variabek kedua untuk menampung querynya
+			 
+		-> buat method constructnya untuk melakukan koneksi langsung ke databases,-
+			 sehingga ketika class ini dipanggil maka akan langsung terkoneksi ke-
+			 databasesnya
+		  
 		
  */
