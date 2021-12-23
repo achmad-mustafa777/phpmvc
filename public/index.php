@@ -5,84 +5,52 @@ require_once '../app/init.php';
 $app = new App();
 
 /*
-	!	MVC Database Wrapper (Pembungkus Database)
+! MVC INSERT DATA
+													
+! Tujuan pembelajaran
 
-! Tujuan Pembelajaran
+-> melakukan insert data menggunakan bantuan modal box milik boostrap
 
--> perlu sebuah class yang dapat mengelola database khusus data yang ada di folder-
-	 model yang artinya dapat mengelola seluruh database
+-> membuat tombol tambah data mahasiswa apabila diklik akan masuk ke form-
+	 tambah datanya menggunakan boostrap
 	 
--> membuat folder configurasi khusus mysqlnya
-
--> menampilkan hanya satu data berupa nama yang jika ingin lebih detail datanya-
-	 maka akan diarahkan ke view yang lainnya
-	 
+-> mengelola data yang dikirim dari form tambah data
 
 
-	 
-todo : Yang akan dilakukan
+todo: Yang akan dilakukan 
 
--> Membuat kelas terpisah khusus untuk koneksi dan mengambil data ke database-
-	 sehingga bisa digunakan untuk ke seluruh database dan pengambilan data yang-
-	 lainnya
+1. Membuat tombol tambah data dan formnya menggunakan boostrap yang ada di web-
+	 https://getbootstrap.com/docs/4.1/components/modal/
 	 
-1. buat folder configurasinya khusus mysqlnya yang berisi data-data dari database-
-	 buat di folder /app/config/config.php
+	 -> copy code <!-- Button trigger modal --> htmlnya lalu di paste ke folder 
+	 		/views/Mahasiswa/index.php
 
-2. hapus file constanta karena baseurlnya sudah dipindahkan ke file config
+	 -> copy code <!-- Modal --> htmlnya dan letakan di paling bawah code
+	 
+	 -> ganti id dari modal dengan nama "judulModal"
+	 
+	 -> isi content dari modal boxnya menggunakan element-element dari boostrapnya-
+	 	  di web https://getbootstrap.com/docs/4.1/components/forms/ di bagian-
+	 	  form controls berupa :
+	 	  
+	 	  -> element nama, nrp, email, jurusan
+	 	  
+	 -> tambahkan tag form untuk mengirim element-element tersebut
+	 
+	 -> tambahkan combo boxnya di dalam formnya juga untuk pilihan jurusan
+	 
+	 
+2. Mengelola data yang akan dikirim dari form
 
-3. koneksikan file config di init.php
-
-4. buat konstanta untuk data-data databasenya di file config.php berupa konstanta :
+	-> buat method baru untuk controllernya di file controllers/Mahasiswa.php dengan-
+		 nama method "tambah"
+		 
+	-> buat method baru untuk menangani query insert datanya di bagian model dengan-
+		 nama methodnya "tambahDataMahasiswa()" di /models/Mahasiswa_model.php.
+		 
+	-> buat method baru di file /core/Database.php yang bertujuan untuk menghitung-
+		 ada berapa baris data yang baru berubah dalam tabelnya, yang akan mengemba-
+		 likan nilai berupa angka.
 	 
-	 -> nama host
-	 -> nama user
-	 -> password
-	 -> nama database
-	 -> alamat baseurl
 	 
-5. buat class Databasenya di folder corenya dengan nama file Database.php yang-
-	 isinya berupa :
-	 
-	 -> variabel yang menampung nilai konstanta di config
-	 -> variabel koneksinya
-	 -> method construc yang langsung terkoneksi ke database
-	 -> method  yang menghubungkan querynya, yang dibuat dalam bentuk generik agar-
-	 		dapat digunakan untuk hal lain seperti "insert,delete,update"
-	 -> method bind
-	 -> method execute
-	 -> method resulSet untuk pengambilan data dalam jumlah besar dengan method -
-	 		array assosiatif
-	 -> method single untuk pengambilan data secara individual dengan menggunakan-
-	 		array assosiatif
-	 		
-6. koneksikan class Databasesnya di init.php sebelum digunakan di file Mahasiswa_model.php
-
-7. jalankan class Databasenya di class Mahasiswa_model di folder model dibagian-
-	 method constructnya
-	 
-
-	 
--> Menampilkan hanya satu data berupa nama, kemudian jika ingin lebih detail datanya-
-	 maka akan diarahkan ke view yang lainnya menggunakan boostrap
-	 
-1. beralih ke website boostrap ke bagaian component list group untuk manampilkan-
-	 data berupa list nama yang jika diklik akan menampilkan data secara detail,-
-	 lalu copy htmlnya
-	 
-2. kita paste ke index.php di folder /views/mahasiswa/index.php
-
-3. buat tombol detailnya disamping tampilan nama agar diarahkan ke halaman info-
-	 lebih detail
-	 
-4. buat method baru dengan nama "detail" di bagian controllernya yaitu di folder-
-	 /controllers/Mahasiswa.php yang bertujuan untuk menangani model datanya
-	 
-5. buat method baru di bagian folder models/Mahasiswa_model.php dengan nama method-
-	 "getMahasiswaById()" untuk menangani pengambilan data secara individual mengg-
-	 unakan id 
-	 
-6. buat file baru lagi untuk menampilkan data mahasiswa secara lengkap / detail -
-	 menggunakan boostrap tampilan card di folder /views/mahasiswa/detail.php
-		
  */
